@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 use Laravel\Socialite\Facades\Socialite;
 use App\Provider;
+use App\User;
 
 
 class LoginController extends Controller
@@ -37,10 +38,13 @@ class LoginController extends Controller
 
 
         if((auth()->user()->roles[0]->id != 5)){
+            
             if((auth()->user()->roles[0]->id != 3)){
-
+               
             return 'admin/dashboard';
             }}else{
+               
+                
                 return '/';
             }
     }
@@ -72,7 +76,47 @@ class LoginController extends Controller
     {
         return Socialite::driver($provider)->redirect();
     }
-
+//Google Login
+public function redirectToGoogle(){
+    return Socialite::driver('google')->stateless()->redirect();
+    }
+    
+    //Google callback  
+    public function handleGoogleCallback($provider){
+    
+     $user = Socialite::driver($provider)->stateless()->user();
+    
+      $this->handleProviderCallback($userGetReal);
+      return redirect()->route('dashboard');
+    }
+    
+    //Facebook Login
+    public function redirectToFacebook(){
+    return Socialite::driver('facebook')->stateless()->redirect();
+    }
+    
+    //facebook callback  
+    public function handleFacebookCallback(){
+    
+    $user = Socialite::driver('facebook')->stateless()->user();
+    
+      $this->handleProviderCallback($userGetReal);
+      return redirect()->route('dashboard');
+    }
+    
+    //Github Login
+    public function redirectToGithub(){
+    return Socialite::driver('github')->stateless()->redirect();
+    }
+    
+    //github callback  
+    public function handleGithubCallback(){
+    
+    $user = Socialite::driver('github')->stateless()->user();
+    
+      $this->_registerorLoginUser($userGetReal);
+      return redirect()->route('dashboard');
+    }
     
 
     public function handleProviderCallback($provider)
@@ -87,7 +131,7 @@ class LoginController extends Controller
                 $userGetReal = User::where('email', $user->getEmail())->first();
                 if(!$userGetReal){
                     $userGetReal = new User;
-                    $userGetReal->first_name=$user->getName();
+                    $userGetReal->name=$user->getName();
                     $userGetReal->email=$user->getEmail();
                     // $userGetReal->image=$user->getAvatar();
                     $userGetReal->save(); //save in users table

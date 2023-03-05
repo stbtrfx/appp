@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0.1
+-- version 4.9.7
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Mar 05, 2023 at 09:17 PM
--- Server version: 10.1.32-MariaDB
--- PHP Version: 7.2.5
+-- Host: localhost:3306
+-- Generation Time: May 18, 2022 at 11:32 AM
+-- Server version: 5.7.38
+-- PHP Version: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -630,15 +630,6 @@ CREATE TABLE `providers` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `providers`
---
-
-INSERT INTO `providers` (`id`, `provider_id`, `provider`, `user_id`, `created_at`, `updated_at`) VALUES
-(1, '116077829723731786188', 'google', 119, '2023-03-05 09:11:40', '2023-03-05 09:11:40'),
-(2, '58447804', 'github', 120, '2023-03-05 17:06:08', '2023-03-05 17:06:08'),
-(3, '5931303206984480', 'facebook', 121, '2023-03-05 17:42:27', '2023-03-05 17:42:27');
-
 -- --------------------------------------------------------
 
 --
@@ -1248,8 +1239,7 @@ INSERT INTO `role_user` (`role_id`, `user_id`, `user_type`) VALUES
 (5, 115, 'App\\User'),
 (5, 116, 'App\\User'),
 (5, 117, 'App\\User'),
-(5, 118, 'App\\User'),
-(1, 119, 'App\\User');
+(5, 118, 'App\\User');
 
 -- --------------------------------------------------------
 
@@ -1327,7 +1317,7 @@ INSERT INTO `social_settings` (`id`, `key`, `value`, `created_at`, `updated_at`)
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -1398,10 +1388,7 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `phone`, `passw
 (115, 'chahed12', 'chahedkhassal@gmail.com', NULL, '+212665262201', '$2y$10$SkWHiJ5/5LZswA2EasRBUu8XURk3X8zjdFqlhP7.KcArMUAq3aGsa', 'customer', 150, '1iYKz0mgju', 1, NULL, NULL, 0, NULL, NULL, 'frEHpPV5QNyzPKr0VedLaA:APA91bHdx0atEbUFbpYM4LhgV5tVDsfM6JRp0cxTxvsjZytWsppCY3VsjgL6Na4R8ZwSAMOv4OaWtCjxw2DibxtCimk_m24e2CPxyViEijCjp9b51p8CGwORTDE7LVTiY7tG4JwS-LwS', '2022-05-01 16:57:32', '2022-05-01 21:42:03'),
 (116, 'soliman', 'soli.edh4an@gmail.com', NULL, '01099271550', '$2y$10$WqBGdVjixY.35T7BcRXrbu8Oxt9mdDc9ZhrbVwBHB3nQuUMQlyB/m', 'customer', 0, 'LZQaJdNQmX', 1, NULL, NULL, 0, NULL, NULL, 'diB_c-5mTF6nel_RSxbCmG:APA91bGN6jCr3P9zxxIjGTNsn1wMj-301HNCFvCLXwvz3y69RNVDsucr2btg4xWcXKx0WItT2UNaH5gvsx4LwCM_6WoFyoAfhAMsVIobz33NxI6L62VZCO60_z7yxFYGYMpW2AdFVbQi', '2022-05-09 15:54:38', '2022-05-09 15:54:39'),
 (117, 'mrbrol', 'm@gmail.com', NULL, '01234597890', '$2y$10$tEznLHAEBavBSt5C0sSeWep.YcI3/GLTxM3HzuU/TS7Gjs1rpNSIK', 'customer', 0, '3aWpRdez6S', 1, NULL, NULL, 0, NULL, NULL, 'cOIjDu2bRluLeNdrMTIY_q:APA91bHYb-p3ZtPkSJIcL8xzqGmQ-WvGnYCyHGf9VouVb6OlVdRbcOwdequNDVIk6DrutexaHREC5zFkQ9qMPeLrim_-Z490Kj7JOZ1Fs62Asz1rdr2WleSfluwWTrMlzmydclxYlH3r', '2022-05-09 16:00:11', '2022-05-09 16:00:11'),
-(118, 'mohammed', 'ali123asxz@hotmail.com', NULL, '0509562947', '$2y$10$Si6dmNzPb0gVF.yiqB2Re.X23c4QXiS6xDWHguedRniexq/R5czve', 'customer', 0, 'MZ2WlWJAQn', 1, NULL, NULL, 0, NULL, NULL, 'eseSMoqtRS-yscQvny03VP:APA91bFgMrfJaTywcQoeRPuuqdZVzMO9WLRjljX2CJpF4UzMjxrJuktp3jMEC1lCT6v8q8VCizb3qOITTLXPvHrO3Ue3bCTYMch3PksgNDnbhdSvuWMcgDCKL33zNGw_YufMYTX84as9', '2022-05-11 13:19:28', '2022-05-11 13:19:32'),
-(119, 'amr', 'amr.freelance01@gmail.com', NULL, 'amr.freelance01@gmail.com', '$2y$10$WufS4gcg2n3WiEnBinRPW.7Ftks49Lbe7eKldjfGwPv4r8d.iwERm', 'admin', 0, NULL, 1, NULL, NULL, 0, NULL, NULL, NULL, '2023-03-04 19:49:30', '2023-03-04 19:49:30'),
-(120, NULL, 'amr.salama223@outlook.com', NULL, NULL, NULL, 'customer', 0, NULL, 1, NULL, NULL, 0, NULL, NULL, NULL, '2023-03-05 17:06:08', '2023-03-05 17:06:08'),
-(121, 'Amr Salama', 'amr.salama2009@hotmail.com', NULL, NULL, NULL, 'customer', 0, NULL, 1, NULL, NULL, 0, NULL, NULL, NULL, '2023-03-05 17:42:27', '2023-03-05 17:42:27');
+(118, 'mohammed', 'ali123asxz@hotmail.com', NULL, '0509562947', '$2y$10$Si6dmNzPb0gVF.yiqB2Re.X23c4QXiS6xDWHguedRniexq/R5czve', 'customer', 0, 'MZ2WlWJAQn', 1, NULL, NULL, 0, NULL, NULL, 'eseSMoqtRS-yscQvny03VP:APA91bFgMrfJaTywcQoeRPuuqdZVzMO9WLRjljX2CJpF4UzMjxrJuktp3jMEC1lCT6v8q8VCizb3qOITTLXPvHrO3Ue3bCTYMch3PksgNDnbhdSvuWMcgDCKL33zNGw_YufMYTX84as9', '2022-05-11 13:19:28', '2022-05-11 13:19:32');
 
 -- --------------------------------------------------------
 
@@ -1473,7 +1460,7 @@ ALTER TABLE `migrations`
 --
 ALTER TABLE `notifications`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `notifications_notifiable_type_notifiable_id_index` (`notifiable_type`(191),`notifiable_id`);
+  ADD KEY `notifications_notifiable_type_notifiable_id_index` (`notifiable_type`,`notifiable_id`);
 
 --
 -- Indexes for table `order_recommendations`
@@ -1485,7 +1472,14 @@ ALTER TABLE `order_recommendations`
 -- Indexes for table `password_resets`
 --
 ALTER TABLE `password_resets`
-  ADD KEY `password_resets_email_index` (`email`(191));
+  ADD KEY `password_resets_email_index` (`email`);
+
+--
+-- Indexes for table `permissions`
+--
+ALTER TABLE `permissions`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `permissions_name_unique` (`name`);
 
 --
 -- Indexes for table `permission_role`
@@ -1495,9 +1489,48 @@ ALTER TABLE `permission_role`
   ADD KEY `permission_role_role_id_foreign` (`role_id`);
 
 --
+-- Indexes for table `permission_user`
+--
+ALTER TABLE `permission_user`
+  ADD PRIMARY KEY (`user_id`,`permission_id`,`user_type`),
+  ADD KEY `permission_user_permission_id_foreign` (`permission_id`);
+
+--
 -- Indexes for table `providers`
 --
 ALTER TABLE `providers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `recommendations`
+--
+ALTER TABLE `recommendations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `roles_name_unique` (`name`);
+
+--
+-- Indexes for table `role_user`
+--
+ALTER TABLE `role_user`
+  ADD PRIMARY KEY (`user_id`,`role_id`,`user_type`),
+  ADD KEY `role_user_role_id_foreign` (`role_id`);
+
+--
+-- Indexes for table `site_settings`
+--
+ALTER TABLE `site_settings`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `social_settings`
+--
+ALTER TABLE `social_settings`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1507,20 +1540,127 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `vips`
+--
+ALTER TABLE `vips`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `academies`
+--
+ALTER TABLE `academies`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `affiliates`
+--
+ALTER TABLE `affiliates`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `currency`
+--
+ALTER TABLE `currency`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
+
+--
+-- AUTO_INCREMENT for table `failed_jobs`
+--
+ALTER TABLE `failed_jobs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `levels`
+--
+ALTER TABLE `levels`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- AUTO_INCREMENT for table `order_recommendations`
+--
+ALTER TABLE `order_recommendations`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+
+--
+-- AUTO_INCREMENT for table `permissions`
+--
+ALTER TABLE `permissions`
+  MODIFY `id` bigint(1) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `providers`
 --
 ALTER TABLE `providers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `recommendations`
+--
+ALTER TABLE `recommendations`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=490;
+
+--
+-- AUTO_INCREMENT for table `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `site_settings`
+--
+ALTER TABLE `site_settings`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `social_settings`
+--
+ALTER TABLE `social_settings`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
+
+--
+-- AUTO_INCREMENT for table `vips`
+--
+ALTER TABLE `vips`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `permission_role`
+--
+ALTER TABLE `permission_role`
+  ADD CONSTRAINT `permission_role_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `permission_role_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `permission_user`
+--
+ALTER TABLE `permission_user`
+  ADD CONSTRAINT `permission_user_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `role_user`
+--
+ALTER TABLE `role_user`
+  ADD CONSTRAINT `role_user_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
