@@ -53,6 +53,7 @@ class AuthController extends Controller
             $user = Auth::guard('api')->user();
             $user->update(['fcm_token'=> $fcm_token]);
             }
+            
 
         return $this->respondWithToken($token);
     }
