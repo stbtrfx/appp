@@ -10,7 +10,7 @@ use App\Recommendation;
 
 
 use App\Traits\imagesTrait;
-use App\User;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Auth;

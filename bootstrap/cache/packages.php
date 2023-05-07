@@ -1,38 +1,16 @@
 <?php return array (
-  'beyondcode/laravel-vouchers' => 
+  'laravel/sail' => 
   array (
     'providers' => 
     array (
-      0 => 'BeyondCode\\Vouchers\\VouchersServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'Vouchers' => 'BeyondCode\\Vouchers\\Facades\\Vouchers',
+      0 => 'Laravel\\Sail\\SailServiceProvider',
     ),
   ),
-  'facade/ignition' => 
+  'laravel/sanctum' => 
   array (
     'providers' => 
     array (
-      0 => 'Facade\\Ignition\\IgnitionServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'Flare' => 'Facade\\Ignition\\Facades\\Flare',
-    ),
-  ),
-  'fideloper/proxy' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
-    ),
-  ),
-  'fruitcake/laravel-cors' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Fruitcake\\Cors\\CorsServiceProvider',
+      0 => 'Laravel\\Sanctum\\SanctumServiceProvider',
     ),
   ),
   'laravel/socialite' => 
@@ -85,6 +63,13 @@
       0 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     ),
   ),
+  'nunomaduro/termwind' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Termwind\\Laravel\\TermwindServiceProvider',
+    ),
+  ),
   'santigarcor/laratrust' => 
   array (
     'providers' => 
@@ -94,6 +79,17 @@
     'aliases' => 
     array (
       'Laratrust' => 'Laratrust\\LaratrustFacade',
+    ),
+  ),
+  'spatie/laravel-ignition' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Spatie\\LaravelIgnition\\IgnitionServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Flare' => 'Spatie\\LaravelIgnition\\Facades\\Flare',
     ),
   ),
   'tymon/jwt-auth' => 

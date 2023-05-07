@@ -12,7 +12,7 @@ use App\Http\Resources\orderResource;
 use App\PackageBooking;
 use App\DeliveryBoy;
 use App\resturants;
-use App\User;
+use App\Models\User;
 
 class OrderController extends Controller
 {
@@ -30,21 +30,21 @@ class OrderController extends Controller
     // }
 
     public function addOrder(Request $request){
-//     
+//
         $validator = Validator::make($request->all(), [
             'total'=>'required',
             'address'=>'required',
             'phone'=>'required',
-            
+
             'products'=>'required',
             'resturant_id'=>'required',
             'region_id'=>'required',
             'lat'=>'required',
             'lng'=>'required',
-            
+
         ]);
         //  dd($request->products[0]['itemID']);
-        
+
         if ($validator->fails()) {
 
             return response()->json(['success'=>'false', 'data'=>$validator->messages()]);
@@ -52,21 +52,21 @@ class OrderController extends Controller
         } else {
             DB::beginTransaction();
 
-           
-            try {    
+
+            try {
             $order = Order::create($request->all());
         //    dd($order->toArray());
             if(isset($order)){
                 foreach($request->products as $p){
                     // dd($p['itemQuantity']);
                 $order_item =  new OrderItem();
-                
+
                 $order_item->order_id = $order->id;
                 $order_item->product_id = $p['itemID'];
-               
+
                 $order_item->qty = $p['itemQuantity'];
                 $order_item->save();
-               
+
                 }
             }
             DB::commit();
@@ -76,10 +76,10 @@ $users = User::whereRoleIs('admin')->get();
             $SERVER_API_KEY = env('SERVER_API_KEY');
             //   $token_1 = 'exn9J8SqT6yQiS4vv8LSeM:APA91bHESgzENbXb8kclNUp--G5uHS965mhllPqliLyfQHsxKGu3bSHbCmcQeFrFYZgDMs2mm5sV--Zo9USPkfm6TVntofE1ICS4RO6H-t2__Dyx4lRLx9DY_DOQ_GZKKmcwOCs6X8kQ';
         //    $token_1= $user->fcm_token;
-            
+
         foreach($users as $u){
         $data = [
-                        
+
                 "registration_ids" => [
                     $u->fcm_token,
                 ],
@@ -91,44 +91,44 @@ $users = User::whereRoleIs('admin')->get();
                 ],
 
                  "sound"=> "default" // required for sound on ios
-        
+
             ];
             $dataString = json_encode($data);
             $headers = [
-                        
+
                 'Authorization: key=' . $SERVER_API_KEY,
-        
+
                 'Content-Type: application/json',
-        
+
             ];
 
             $ch = curl_init();
-                        
+
             curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
-        
+
             curl_setopt($ch, CURLOPT_POST, true);
-        
+
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        
+
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        
+
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        
+
             curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
-        
+
             $response = curl_exec($ch);
         }
             //  dd($response);
             // // end notification
 
         return response()->json(['success'=>'true', 'data'=>$order->id]);
-            
+
         }catch(\Exception $e) {
             DB::rollback();
-            
+
             return response()->json(['success'=>'false', 'data'=>'error']);
         }
-                
+
         }
     }
 
@@ -147,8 +147,8 @@ $users = User::whereRoleIs('admin')->get();
         }catch(\Exception $e) {
             return response()->json(['success'=>'false','error'=>'error in update payment']);
         }
-      
-       
+
+
     }
 
 
@@ -156,20 +156,20 @@ $users = User::whereRoleIs('admin')->get();
 
 
         $vendor = User::findOrFail($vendor_id);
-        // dd($vendor->roles[0]->name); 
+        // dd($vendor->roles[0]->name);
         if($vendor->hasRole(['admin','moderator'])){
             $orders = Order::orderBy('id','DESC')->paginate(10);
-                    
+
             $delivery = DeliveryBoy::where([['status', '1']])->get();
-        }else if($vendor->hasRole(['vendor'])){   
+        }else if($vendor->hasRole(['vendor'])){
             $resturant = resturants::where('user_id', $vendor_id)->first();
 
             if(isset($resturant)){
                 $orders = Order::where('resturant_id',$resturant->id)->orderBy('id','DESC')->paginate(10);
-                    
+
                 // $delivery = DeliveryBoy::where([['status', '1'],['resturant_id', $resturant->id]])->get();
             }
-        
+
         }else{
             return response()->json(['success'=>'false','data'=>'there is no vendor !']);
         }
@@ -197,15 +197,15 @@ $users = User::whereRoleIs('admin')->get();
 
         $old_delivery = DeliveryBoy::find($order['delivery_id']);
 
-     
+
             $new_delivery = DeliveryBoy::find($request -> delivery_id);
-    
+
 
         if (!$new_delivery) {
-            
+
             return response()->json(['success'=>'false','data'=>'No Delivery Boys Available']);
 
-           
+
         }
 
         if(isset($old_delivery)){
@@ -229,6 +229,6 @@ $users = User::whereRoleIs('admin')->get();
 
         return redirect() -> route('order.index');
     }
-   
+
 }
 

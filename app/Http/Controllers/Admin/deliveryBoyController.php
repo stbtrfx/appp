@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\DeliveryBoy;
 use App\Traits\imagesTrait;
-use App\User;
+use App\Models\User;
 use App\resturants;
 
 use Illuminate\Support\Facades\Storage;
@@ -27,8 +27,8 @@ class deliveryBoyController extends Controller
             $resturant=resturants::where('user_id',$vendor_id)->first();
             $deliveryBoys = DeliveryBoy ::where('resturant_id',$resturant->id)->paginate(10);
         }
-        
-       
+
+
         return view('admin.deliveryBoy.index', compact('deliveryBoys'));
     }
 
@@ -36,9 +36,9 @@ class deliveryBoyController extends Controller
     {
         $resturants= resturants::all();
         // $users = User::whereRoleIs('admin')->orWhereRoleIs('regular-user')->get();
-        
+
         $delivery = User::whereRoleIs('delivery')->with('deliveryboy') -> get();
-        
+
         //   dd($delivery);
         return view('admin.deliveryBoy.create', compact('delivery'));
     }
@@ -61,7 +61,7 @@ class deliveryBoyController extends Controller
             'License_back' => 'required',
             'proof_front' => 'required',
             'proof_back' => 'required',
-            
+
 
         ]);
 
@@ -105,7 +105,7 @@ class deliveryBoyController extends Controller
             $data['is_staff'] = 1;
         }
 
-        
+
 
 
         DeliveryBoy::create($data);
@@ -236,7 +236,7 @@ class deliveryBoyController extends Controller
 
     public function addDeliveryToResturant(Request $request){
         if(Auth::user()->hasRole(['vendor'])){
-          
+
             $data = $request -> validate([
                 'phone' => 'required',
             ]);
@@ -246,15 +246,15 @@ class deliveryBoyController extends Controller
             $data = $request -> validate([
                 'phone' => 'required',
                 'resturant' => 'required',
-            ]); 
+            ]);
             $res_id = $request->resturant;
         }
-       
+
         $user_delivery = User::where('phone',$request->phone)->first();
-    
+
 
         if(isset($user_delivery)){
-           
+
        $delivery =DeliveryBoy::where('user_id',$user_delivery->id)->first();
     //    dd($delivery);
        $delivery->update(array("resturant_id" => $res_id));

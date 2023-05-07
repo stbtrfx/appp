@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use App\Vip;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
-use App\User;
+use App\Models\User;
 use App\OrderRecommendation;
 use App\Recommendation;
 use App\SiteSetting;
@@ -222,8 +222,8 @@ if($request->payByCoins == 1){
     }
 
 public function notifications($user_id){
-        
-       
+
+
 
         $user = User::find($user_id);
 

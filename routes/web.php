@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LoginController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,8 +19,8 @@ Route::get('/', function () {
     return redirect()->route('home');
 });
 
-Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]], function()
-{
+Route::group( [ 'prefix' => 'LaravelLocalization'::setLocale(),
+'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ] ],function(){
 
     Route::group(['prefix' => 'admin'] , function () {
         Auth::routes();
@@ -31,11 +31,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [ 'l
         return view('auth.login');
    });
 
-    Route::group(['namespace' => 'Admin', 'prefix' => 'admin'] , function () {
-        
-    Route::group(['middleware' => ['role:admin|moderator','auth']],function(){
-        Route::get('dashboard', 'DashboardController@index')->name('home');
-        Route::resource('/product','productController');
+    Route::group(['prefix' => 'admin'] , function () {
+
+    Route::group(['middleware' => ['auth']],function(){ //'role:admin|moderator',
+        Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('home');
+        Route::resource('/product', App\Http\Controllers\Admin\productController::class);
+
         Route::resource('/recommendation','recommendationController');
         Route::resource('/academy','AcademyController');
         Route::resource('/level','levelController');
@@ -47,7 +48,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [ 'l
         Route::put('/userEditLevel','UsersController@editUserLevel')->name('user.level.edit');
         Route::get('/SendNotification','NotificationController@create')->name('Notification.create');
         Route::post('/Send','NotificationController@send')->name('Notification.send');
-        
+
 
 
         Route::get('/notifications','NotificationController@index')->name('Notification.index');
@@ -88,15 +89,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [ 'l
 Route::get('login/{provider}', '\App\Http\Controllers\Auth\LoginController@redirectToProvider')->name('social.login');
 Route::get('login/{provider}/callback', '\App\Http\Controllers\Auth\LoginController@handleProviderCallback');
 
+Auth::routes();
 
-//Google
-Route::get('/login/google', [LoginController::class, 'redirectToGoogle'])->name('login.google');
-Route::get('/login/google/callback', [LoginController::class, 'handleGoogleCallback']);
-//Facebook
-Route::get('/login/facebook', [LoginController::class, 'redirectToFacebook'])->name('login.facebook');
-Route::get('/login/facebook/callback', [LoginController::class, 'handleFacebookCallback']);
-//Github
-Route::get('/login/github', [LoginController::class, 'redirectToGithub'])->name('login.github');
-Route::get('/login/github/callback', [LoginController::class, 'handleGithubCallback']);
-
-
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

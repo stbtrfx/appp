@@ -8,7 +8,7 @@
      <div class="aside-logo flex-column-auto" id="kt_aside_logo" style="height: 120px;">
          <!--begin::Logo-->
          <a href="#" class="m-auto">
-             <img alt="Logo" src="{{ $site_settings->logo }}" class=" logo" style="height: 100px;" />
+             <img alt="Logo" src="{{ App\SiteSetting::first()->logo }}" class=" logo" style="height: 100px;" />
          </a>
          <!--end::Logo-->
          <!--begin::Aside toggler-->

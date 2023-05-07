@@ -13,7 +13,7 @@ body {
 .main-head{
     height: 150px;
     background: #FFF;
-   
+
 }
 
 .sidenav {
@@ -44,7 +44,7 @@ body {
 
 @media screen and (min-width: 768px){
     .main{
-        margin-left: 40%; 
+        margin-left: 40%;
     }
 
     .sidenav{
@@ -137,7 +137,7 @@ body {
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
                                 </button>
-                          
+
 
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
@@ -146,20 +146,19 @@ body {
                                 @endif
                             </div>
 
-                           
+
                         </div>
-                       
+
                     </form>
-                   
+
             </div>
             <label class="form-check-label offset-md-7">
                                         {{ __('OR') }}
                                     </label>
             <div class="form-group row">
                                 <div class="col-md-8 offset-md-4">
-                                    <a href="{{ route('login.google') }}" class="btn btn-danger btn-block">Login with Google</a>
-                                    <a href="{{ route('login.facebook') }}" class="btn btn-primary btn-block">Login with Facebook</a>
-                                    <a href="{{ route('login.github') }}" class="btn btn-dark btn-block">Login with Github</a>
+                                    <a href="{{ route('social.login','google') }}" class="btn btn-danger btn-block">Login with Google</a>
+                                    <a href="{{-- route('login.github') --}}" class="btn btn-dark btn-block">Login with apple</a>
                                 </div>
                             </div>
          </div>

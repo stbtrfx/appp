@@ -22,7 +22,7 @@ class DeliveryboyController extends Controller
 
     public function newRequests($id){
         $delivery=DeliveryBoy::where('user_id',$id)->first();
-        
+
         $order = Order::where([['delivery_id',$delivery->id]])->whereIn('status',['Confirmed','On Delivery'])->get();
         return response()->json(['success'=>'true','data'=>orderResource::collection($order)]);
 
@@ -41,14 +41,14 @@ class DeliveryboyController extends Controller
     public function active(Request $request){
         $delivery=DeliveryBoy::where('user_id',$request->user_id)->first();
         $delivery->status = $request->status;
-        $delivery->save(); 
+        $delivery->save();
         return response()->json(['success'=>'true','data'=>'status updated successfully']);
     }
 
     public function isActive($id){
         $delivery=DeliveryBoy::where('user_id',$id)->first();
         $vendor_id = resturants::where('id',$delivery->resturant_id)->select('user_id')->first();
-      
+
         $status = $delivery->status;
         return response()->json(['success'=>'true','data'=>$status,'vendor_id'=>$vendor_id]);
     }
@@ -61,23 +61,23 @@ class DeliveryboyController extends Controller
             'user_id'=>'required',
         ]);
         //  dd($request->products[0]['itemID']);
-        
+
         if ($validator->fails()) {
 
             return response()->json(['success'=>'false', 'data'=>$validator->messages()]);
 
         } else {
-            // get data 
+            // get data
             if(isset($request->orders)){
                 foreach($request->orders as $o){
                     Order::where('id',$o)->update(['status' => $request->status]);
-                    
+
                 }
                 DeliveryBoy::where('user_id',$request->user_id)->update(['status' => 2]);
             }
             return response()->json(['success'=>'true','data'=>'status updated successfully']);
         }
-            
+
 
     }
 

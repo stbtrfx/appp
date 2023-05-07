@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\resturants;
 use App\MainCategories;
-use App\User;
+use App\Models\User;
 use App\MainCategoryResturant;
 use App\Traits\imagesTrait;
 use DB;
@@ -24,7 +24,7 @@ class ResturantController extends Controller
 
     public function create()
     {
-        
+
         $MainCategories= MainCategories::all();
         $vendors= User::whereRoleIs('vendor') -> get();
         return view('admin.resturant.create',compact('MainCategories','vendors'));
@@ -38,11 +38,11 @@ class ResturantController extends Controller
             'phone1' => 'required|string',
             'image' => 'required',
             'user_id' => 'required',
-         
+
         ]);
 
         $data= $request->all();
-      
+
     if ($request -> has('image')) {
             $image = $this -> saveImages($request -> image, 'images/resturants');
             $data['image'] = $image;
@@ -55,24 +55,24 @@ class ResturantController extends Controller
                 foreach($request->maincategories as $c){
                     // dd($p['itemQuantity']);
                 $MainCategoryResturant =  new MainCategoryResturant();
-                
+
                 $MainCategoryResturant->resturants_id = $res->id;
-                $MainCategoryResturant->main_categories_id = $c;               
+                $MainCategoryResturant->main_categories_id = $c;
                 $MainCategoryResturant->save();
-               
+
                 }
-         
+
                 DB::commit();
             }else{
                 DB::rollback();
                 session()->flash('success', trans('Error in add resturant'));
                 return redirect()->back();
             }
-            
-    
-        
 
-      
+
+
+
+
         session()->flash('success', trans('added successfully'));
         return redirect()->route('resturants.index');
     }
@@ -109,11 +109,11 @@ class ResturantController extends Controller
         }
 
 
-       
+
             DB::beginTransaction();
 
-           
-            try {    
+
+            try {
                $resturant->update($data);
         //    dd($order->toArray());
             if(isset($resturant) && $request->maincategories != null){
@@ -122,14 +122,14 @@ class ResturantController extends Controller
 
                 foreach($request->maincategories as $c){
                 $MainCategoryResturant =  new MainCategoryResturant();
-                
+
                 $MainCategoryResturant->resturants_id = $resturant->id;
-                $MainCategoryResturant->main_categories_id = $c;               
+                $MainCategoryResturant->main_categories_id = $c;
                 $MainCategoryResturant->save();
-               
+
                 }
-         
-            
+
+
             }
             DB::commit();
         }catch(\Exception $e) {
@@ -137,9 +137,9 @@ class ResturantController extends Controller
             session()->flash('success', trans('Error in update'));
             return redirect()->back();
         }
-        
 
-      
+
+
         session()->flash('success', trans('updated successfully'));
         if(Auth::user()->hasRole(['admin','moderator'])){
         return redirect()->route('resturants.index');
@@ -147,11 +147,11 @@ class ResturantController extends Controller
             return redirect()->route('home');
         }
     }
-    
+
 
     public function destroy($id)
     {
-        try {    
+        try {
         DB::beginTransaction();
         resturants::where('id', $id)->delete();
         MainCategoryResturant::where('resturants_id',$id)->delete();

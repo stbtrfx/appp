@@ -9,7 +9,7 @@ use App\Collection\ProductCollection;
 class Product extends Model
 {
     //
-use HasVouchers;
+//use HasVouchers;
     protected $fillable=[
         'name_en',
         'name_ar',

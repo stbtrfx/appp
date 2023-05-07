@@ -6,15 +6,15 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>STB | {{ $site_settings['title_' . LaravelLocalization::getCurrentLocale()] }}</title>
-    <meta name="title" content="{{ $site_settings['meta_title_' . LaravelLocalization::getCurrentLocale()] }}" />
+    <title>STB | {{  App\SiteSetting::first()->title_. LaravelLocalization::getCurrentLocale() }}</title>
+    <meta name="title" content="{{ App\SiteSetting::first()->meta_title_. LaravelLocalization::getCurrentLocale() }}" />
     <meta name="description"
-        content="{{ $site_settings['meta_description_' . LaravelLocalization::getCurrentLocale()] }}" />
+        content="{{ App\SiteSetting::first()->meta_description_. LaravelLocalization::getCurrentLocale() }}" />
     <meta name="keywords"
-        content="{{ $site_settings['meta_keyword_' . LaravelLocalization::getCurrentLocale()] }}" />
+        content="{{ App\SiteSetting::first()->meta_keyword_. LaravelLocalization::getCurrentLocale() }}" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="shortcut icon" href="{{ $site_settings->favicon_path }}" />
+    <link rel="shortcut icon" href="{{ App\SiteSetting::first()->favicon_path }}" />
 
     <!--begin::Fonts-->
 

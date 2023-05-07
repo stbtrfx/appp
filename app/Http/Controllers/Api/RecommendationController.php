@@ -10,7 +10,7 @@ use Carbon\Carbon;
 use App\Http\Resources\ProductCollection;
 use BeyondCode\Vouchers\Models\Voucher;
 use Validator;
-use App\User;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 use BeyondCode\Vouchers\Facades\vouchers as Vouchers;

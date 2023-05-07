@@ -46,7 +46,7 @@ return [
         | NOTE: Currently the database check does not use cache.
         |
         */
-        'enabled' => env('LARATRUST_ENABLE_CACHE', true),
+        'enabled' => env('LARATRUST_ENABLE_CACHE', env('APP_ENV') === 'production'),
 
         /*
         |--------------------------------------------------------------------------
@@ -73,7 +73,7 @@ return [
     |
     */
     'user_models' => [
-        'users' => App\User::class,
+        'users' => \App\Models\User::class,
     ],
 
     /*
@@ -194,7 +194,7 @@ return [
              * If the message content is empty it won't be added to the redirection.
              */
             'redirect' => [
-                'url' => '/',
+                'url' => '/home',
                 'message' => [
                     'key' => 'error',
                     'content' => ''
@@ -310,6 +310,16 @@ return [
         |
         */
         'assign_permissions_to_user' => true,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Enable permissions creation
+        |--------------------------------------------------------------------------
+        |
+        | Enable/Disable the possibility to create permissions from the panel.
+        |
+        */
+        'create_permissions' => true,
 
         /*
         |--------------------------------------------------------------------------

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 
 
 use App\Affiliate;
-use App\User;
+use App\Models\User;
 
 use Str;
 use Illuminate\Support\Facades\DB;

@@ -12,7 +12,7 @@ use Laravel\Socialite\Facades\Socialite;
 use App\Provider;
 
 
-use App\User;
+use App\Models\User;
 use Validator;
 use Str;
 
@@ -53,7 +53,7 @@ class AuthController extends Controller
             $user = Auth::guard('api')->user();
             $user->update(['fcm_token'=> $fcm_token]);
             }
-            
+
 
         return $this->respondWithToken($token);
     }
@@ -127,7 +127,7 @@ class AuthController extends Controller
                 return response()->json(['success'=>'false', 'error'=>'الكود غير صحيح']);
             }
          }
-          
+
 // end add pints
         return $this->respondWithToken($token);
 

@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 use Laravel\Socialite\Facades\Socialite;
 use App\Provider;
-use App\User;
+use App\Models\User;
 
 
 class LoginController extends Controller
@@ -38,13 +38,13 @@ class LoginController extends Controller
 
 
         if((auth()->user()->roles[0]->id != 5)){
-            
+
             if((auth()->user()->roles[0]->id != 3)){
-               
+
             return 'admin/dashboard';
             }}else{
-               
-                
+
+
                 return '/';
             }
     }
@@ -76,58 +76,16 @@ class LoginController extends Controller
     {
         return Socialite::driver($provider)->redirect();
     }
-//Google Login
-public function redirectToGoogle(){
-    return Socialite::driver('google')->stateless()->redirect();
-    }
-    
-    //Google callback  
-    public function handleGoogleCallback($provider){
-    
-     $user = Socialite::driver($provider)->stateless()->user();
-    
-      $this->handleProviderCallback($userGetReal);
-      return redirect()->route('dashboard');
-    }
-    
-    //Facebook Login
-    public function redirectToFacebook(){
-    return Socialite::driver('facebook')->stateless()->redirect();
-    }
-    
-    //facebook callback  
-    public function handleFacebookCallback(){
-    
-    $user = Socialite::driver('facebook')->stateless()->user();
-    
-      $this->handleProviderCallback($userGetReal);
-      return redirect()->route('dashboard');
-    }
-    
-    //Github Login
-    public function redirectToGithub(){
-    return Socialite::driver('github')->stateless()->redirect();
-    }
-    
-    //github callback  
-    public function handleGithubCallback(){
-    
-    $user = Socialite::driver('github')->stateless()->user();
-    
-      $this->_registerorLoginUser($userGetReal);
-      return redirect()->route('dashboard');
-    }
-    
 
     public function handleProviderCallback($provider)
     {
         $user = Socialite::driver($provider)->stateless()->user();
-        
+
         $provider_user= Provider::where('provider_id', $user->getId())->first();
 
         if(!$provider_user){
             // register
-                // check if this email exsist 
+                // check if this email exsist
                 $userGetReal = User::where('email', $user->getEmail())->first();
                 if(!$userGetReal){
                     $userGetReal = new User;
@@ -140,22 +98,18 @@ public function redirectToGoogle(){
             $provider_user->provider_id= $user->getId();
             $provider_user->provider= $provider;
             $provider_user->user_id= $userGetReal->id;
-            $provider_user->save(); //save in providers table 
-
+            $provider_user->save(); //save in providers table
+            Auth::login($userGetReal);
+            //auth()->login($userGetReal);
+            return redirect('/');
 
         }else{
             // login
             $userGetReal = User::find($provider_user->user_id);
-
+            Auth::login($userGetReal);
+            //auth()->login($userGetReal);
+            return redirect('/');
         }
-
-        auth()->login($userGetReal);
-        return redirect('/');
-
-        
-        
-        //dd($user);
-        // $user->token;
     }
 
 

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 
 use App\OrderRecommendation;
 use App\Recommendation;
-use App\User;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Auth;

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Academy;
-use App\User;
+use App\Models\User;
 use App\OrderRecommendation;
 use App\Http\Controllers\Controller;
 
